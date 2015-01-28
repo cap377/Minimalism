@@ -7,7 +7,7 @@ import starling.animation.Transitions;
 class Root extends Sprite {
 
     public static var assets:AssetManager;
-    public var ninja:Image;
+    public var preGame:Image;
 
     public function new() {
         super();
@@ -16,28 +16,21 @@ class Root extends Sprite {
     public function start(startup:Startup) {
 
         assets = new AssetManager();
-        assets.enqueue("assets/ninja.png");
+        assets.enqueue("assets/pre game.png");
         assets.loadQueue(function onProgress(ratio:Float) {
 
             if (ratio == 1) {
 
-                Starling.juggler.tween(startup.loadingBitmap, 2.0, {
-                    transition: Transitions.EASE_OUT,
-                        delay: 1.0,
+                Starling.juggler.tween(startup.loadingBitmap, 1.5, {
+                    transition: Transitions.LINEAR,
+                        delay: 0,
                         alpha: 0,
                         onComplete: function() {
                         startup.removeChild(startup.loadingBitmap);
-                        ninja = new Image(Root.assets.getTexture("ninja"));
-                        ninja.x = 100;
-                        ninja.y = 0;
-                        addChild(ninja);
-
-                        Starling.juggler.tween(ninja, 1.0, {
-                            transition: Transitions.EASE_OUT_BOUNCE,
-                                delay: 2.0,
-                                y: 250
-                                });
-
+                        preGame = new Image(Root.assets.getTexture("pre game"));
+                        preGame.x = 0;
+                        preGame.y = 0;
+                        addChild(preGame);
                     }
 
                 });

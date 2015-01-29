@@ -6,14 +6,10 @@ import starling.animation.Transitions;
 import starling.events.Event;
 import starling.events.KeyboardEvent;
 
-//[Embed(source="../media/sounds/testedit.wav")]
-//public const MOVE_SOUND:Class;
-
 class Root extends Sprite {
 
     public static var assets:AssetManager;
     public var first_screen:Image;
-	//public var testsound:Sound;
 	public var got_items = 0;
 
     public function new() {
@@ -21,12 +17,12 @@ class Root extends Sprite {
 		update();
     }
 
-
+ 
     public function start(startup:Startup) {
 
         assets = new AssetManager();
         assets.enqueue("assets/first_screen.png");
-        //assets.enqueue("assets/testedit.wav");
+        assets.enqueue("assets/testedit.mp3");
         assets.loadQueue(function onProgress(ratio:Float) {
 
             if (ratio == 1) {
@@ -41,16 +37,10 @@ class Root extends Sprite {
                         first_screen.x = 0;
                         first_screen.y = 0;
                         addChild(first_screen);
-                        //testsound = new Sound(Root.assets.getSound("testedit"));
-						//addChild(testsound);
+						Root.assets.playSound("testedit");
                     }
-					
-
                 });
-				
             }
-			
-
         });
     }
 	
@@ -109,12 +99,8 @@ class Root extends Sprite {
                         first_screen.y = 0;
                         addChild(first_screen);
                     }
-					
-
                 });
-				
             }
-
 			});
 			
 			}

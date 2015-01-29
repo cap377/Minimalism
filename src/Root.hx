@@ -85,6 +85,9 @@ class Root extends Sprite {
 			assets = new AssetManager();
 			assets.enqueue("assets/you_win.png");
 			assets.loadQueue(function onProgress(ratio:Float) {
+			
+			
+			Root.assets.playSound("testedit");
 
             if (ratio == 1) {
 
@@ -132,6 +135,37 @@ class Root extends Sprite {
 			});
 			
 			}
+		}
+		else if(e.keyCode == 68){
+			assets = new AssetManager();
+			assets.enqueue("assets/dino_lose.png");
+			assets.enqueue("assets/dinosaurgameover.mp3");
+			assets.loadQueue(function onProgress(ratio:Float) {
+
+            if (ratio == 1) {
+
+                Starling.juggler.tween(first_screen, 1.5, {
+                    transition: Transitions.LINEAR,
+                        delay: 0,
+                        alpha: 0,
+                        onComplete: function() {
+                        removeChild(first_screen);
+						Root.assets.playSound("dinosaurgameover");
+                        first_screen = new Image(Root.assets.getTexture("dino_lose"));
+                        first_screen.x = 0;
+                        first_screen.y = 0;
+                        addChild(first_screen);
+                    }
+					
+
+                });
+				
+            }
+
+			});
+            
+			got_items += 1;
+			
 		}
     }
 	

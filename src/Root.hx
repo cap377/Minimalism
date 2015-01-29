@@ -1,4 +1,3 @@
-import flash.media.Sound;
 import starling.display.Sprite;
 import starling.utils.AssetManager;
 import starling.display.Image;
@@ -14,27 +13,20 @@ class Root extends Sprite {
 
     public static var assets:AssetManager;
     public var first_screen:Image;
-
+	//public var testsound:Sound;
+	public var got_items = 0;
 
     public function new() {
         super();
+		update();
     }
+
 
     public function start(startup:Startup) {
 
         assets = new AssetManager();
-	    assets.enqueue("assets/dino_lose.png");
-        assets.enqueue("assets/first_screen_no_pants_or_pencil.png");
-        assets.enqueue("assets/first_screen_no_pants.png");
-        assets.enqueue("assets/first_screen_no_paper.png");
-        assets.enqueue("assets/first_screen_no_pencil.png");
         assets.enqueue("assets/first_screen.png");
-        assets.enqueue("assets/lose.png");
-        assets.enqueue("assets/ready_for_school.png");
-        assets.enqueue("assets/sleep_lose.png");
-        assets.enqueue("assets/tv_lose.png");
-        assets.enqueue("assets/win_pants.png");
-        assets.enqueue("assets/you_win.png");
+        //assets.enqueue("assets/testedit.wav");
         assets.loadQueue(function onProgress(ratio:Float) {
 
             if (ratio == 1) {
@@ -48,46 +40,114 @@ class Root extends Sprite {
                         first_screen = new Image(Root.assets.getTexture("first_screen"));
                         first_screen.x = 0;
                         first_screen.y = 0;
-						first_screen = new Image(Root.assets.getTexture("first_screen"));
-                        first_screen.x = 0;
-                        first_screen.y = 0;
-						first_screen = new Image(Root.assets.getTexture("first_screen"));
-                        first_screen.x = 0;
-                        first_screen.y = 0;
-						first_screen = new Image(Root.assets.getTexture("first_screen"));
-                        first_screen.x = 0;
-                        first_screen.y = 0;
-						first_screen = new Image(Root.assets.getTexture("first_screen"));
-                        first_screen.x = 0;
-                        first_screen.y = 0;
-						first_screen = new Image(Root.assets.getTexture("first_screen"));
-                        first_screen.x = 0;
-                        first_screen.y = 0;
-						first_screen = new Image(Root.assets.getTexture("first_screen"));
-                        first_screen.x = 0;
-                        first_screen.y = 0;
-						first_screen = new Image(Root.assets.getTexture("first_screen"));
-                        first_screen.x = 0;
-                        first_screen.y = 0;
                         addChild(first_screen);
-                        addChild(first_screen_no_pants_or_pencil);
-                        addChild(first_screen_no_pants);
-                        addChild(first_screen_no_pencil);
-                        addChild(lose);
-                        addChild(ready_for_school);
-                        addChild(sleep_lose);
-                        addChild(tv_lose);
-                        addChild(win_pants);
-                        addChild(you_win);
-                        addChild(dino_lose);
+                        //testsound = new Sound(Root.assets.getSound("testedit"));
+						//addChild(testsound);
                     }
+					
 
                 });
+				
             }
+			
 
         });
     }
 	
+	public function update(){
+        Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, checkInput);
+    }
+	
+	private function checkInput(e:KeyboardEvent)
+    {
+        if(e.keyCode == 65){
+			assets = new AssetManager();
+			assets.enqueue("assets/first_screen_no_paper.png");
+			assets.loadQueue(function onProgress(ratio:Float) {
 
+            if (ratio == 1) {
 
+                Starling.juggler.tween(first_screen, 1.5, {
+                    transition: Transitions.LINEAR,
+                        delay: 0,
+                        alpha: 0,
+                        onComplete: function() {
+                        removeChild(first_screen);
+                        first_screen = new Image(Root.assets.getTexture("first_screen_no_paper"));
+                        first_screen.x = 0;
+                        first_screen.y = 0;
+                        addChild(first_screen);
+                    }
+					
+
+                });
+				
+            }
+
+			});
+            
+			got_items += 1;
+			
+		}
+        else if(e.keyCode == 66){
+            if (got_items == 1){
+			
+			assets = new AssetManager();
+			assets.enqueue("assets/you_win.png");
+			assets.loadQueue(function onProgress(ratio:Float) {
+
+            if (ratio == 1) {
+
+                Starling.juggler.tween(first_screen, 1.5, {
+                    transition: Transitions.LINEAR,
+                        delay: 0,
+                        alpha: 0,
+                        onComplete: function() {
+                        removeChild(first_screen);
+                        first_screen = new Image(Root.assets.getTexture("you_win"));
+                        first_screen.x = 0;
+                        first_screen.y = 0;
+                        addChild(first_screen);
+                    }
+					
+
+                });
+				
+            }
+
+			});
+			
+			}
+			else{
+			
+			assets = new AssetManager();
+			assets.enqueue("assets/lose.png");
+			assets.loadQueue(function onProgress(ratio:Float) {
+
+            if (ratio == 1) {
+
+                Starling.juggler.tween(first_screen, 1.5, {
+                    transition: Transitions.LINEAR,
+                        delay: 0,
+                        alpha: 0,
+                        onComplete: function() {
+                        removeChild(first_screen);
+                        first_screen = new Image(Root.assets.getTexture("lose"));
+                        first_screen.x = 0;
+                        first_screen.y = 0;
+                        addChild(first_screen);
+                    }
+					
+
+                });
+				
+            }
+
+			});
+			
+			}
+		}
+    }
+	
+	
 }

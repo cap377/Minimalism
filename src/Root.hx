@@ -10,6 +10,7 @@ class Root extends Sprite {
 
     public static var assets:AssetManager;
     public var first_screen:Image;
+    //Checks to see how far the player has gotten
 	public var got_items = 0;
 	public var got_pants = 0;
 
@@ -22,6 +23,8 @@ class Root extends Sprite {
     public function start(startup:Startup) {
 
         assets = new AssetManager();
+        //Any time new assets are to be loaded, they're put into the queue
+        //and are either mapped to the one image var or are played by the game
         assets.enqueue("assets/first_screen.png");
         assets.enqueue("assets/testedit.mp3");
         assets.loadQueue(function onProgress(ratio:Float) {
@@ -45,10 +48,13 @@ class Root extends Sprite {
         });
     }
 	
+	//Function to check if a key has been pressed
 	public function update(){
         Starling.current.stage.addEventListener(KeyboardEvent.KEY_DOWN, checkInput);
     }
 	
+	//Throughout the game, it checks to see if the player is pressing any
+	//of the following key codes.
 	private function checkInput(e:KeyboardEvent)
     {
         if(e.keyCode == 65){
@@ -77,12 +83,15 @@ class Root extends Sprite {
 
 			});
             
+            //The games recognizes that the paper and pencil were picked up
 			got_items = 1;
 			
 		}
         else if(e.keyCode == 66){
+        	//Two checks here: see if the player got the items
+        	//and if the player is currently wearing pants.
             if (got_items == 1){
-				if (got_pants == 1){
+		if (got_pants == 1){
 			
 			assets = new AssetManager();
 			assets.enqueue("assets/you_win.png");
@@ -223,8 +232,6 @@ class Root extends Sprite {
             }
 
 			});
-            
-			got_items += 1;
 			
 		}
 		else if(e.keyCode == 69){
@@ -254,8 +261,6 @@ class Root extends Sprite {
             }
 
 			});
-            
-			got_items += 1;
 			
 		}
     }

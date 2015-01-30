@@ -16,6 +16,8 @@ import flash.events.Event;
 
 class Root extends Sprite {
 
+    //The game uses text fields for printing out the game's text,
+    //but it also needs the asset manager to load the two door graphics.
     public static var assets:AssetManager;
     public var Door1:Image;
     public var Door2:Image;
@@ -27,6 +29,8 @@ class Root extends Sprite {
     public var scoreText:TextField;
     public var overText:TextField;
 
+    //The game is constantly deciding which door to pick.
+    //The Std library has a random number generator used here.
     public function makeDoor(){
         choice1 = Std.random(9);
         if(choice1 <= 4){
@@ -43,6 +47,8 @@ class Root extends Sprite {
         super();
     }
 
+    //The game has touch listeners to make sure the player is clicking on the correct door.
+    //Note that this also works with mice.
     public function start(startup:Startup) {
 
         assets = new AssetManager();
